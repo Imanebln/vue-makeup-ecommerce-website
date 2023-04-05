@@ -1,32 +1,66 @@
 <template>
   <div id="app">
-    <nav>
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </nav>
-    <router-view/>
+    <Header />
+    <router-view />
+    <Footer />
   </div>
 </template>
-
+<script>
+import Header from "./components/Header.vue";
+import Footer from "@/components/Footer.vue";
+import { auth } from "@/firebaseConfig";
+export default {
+  components: {
+    Header,
+    Footer,
+  },
+  mounted() {
+    this.$store.dispatch("getProducts");
+    this.$store.dispatch("getCartItems");
+    // auth.onAuthStateChanged((user) => {
+    //   this.$store.dispatch("fetchUser", user);
+    // });
+  },
+};
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+@import url("https://fonts.googleapis.com/css2?family=Charm:wght@400;700&family=Dancing+Script:wght@700&family=Inconsolata:wght@300;400;500;700&family=Nunito+Sans:wght@300;400;600;700;800&family=Poppins:wght@700&family=Raleway:wght@400;500&family=Roboto:wght@300;400;500;700&display=swap");
+:root {
+  --primary: #fff;
+  --grey: #64748b;
+  --dark: #1e293b;
+  --dark-alt: #334155;
+  --light: #333;
+  --sidebar-width: 300px;
 }
-
-nav {
-  padding: 30px;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Nunito Sans", sans-serif;
+  text-decoration: none;
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.container {
+  max-width: calc(1440px - 130px);
+  padding: 0 20px;
+  width: 100%;
+  margin: auto;
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.btn {
+  background: transparent;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+img {
+  width: 100%;
+}
+span.icon {
+  display: flex;
+  align-items: center;
 }
 </style>
