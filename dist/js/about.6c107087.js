@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkvue_ecommerce_makeup_app"]=self["webpackChunkvue_ecommerce_makeup_app"]||[]).push([[443],{1722:function(e,u,t){t.r(u),t.d(u,{default:function(){return l}});var s=function(){var e=this;e._self._c,e._self._setupProxy;return e._m(0)},_=[function(){var e=this,u=e._self._c;e._self._setupProxy;return u("div",{staticClass:"about"},[u("h1",[e._v("This is an about page")])])}],n={__name:"AboutView",setup(e){return{__sfc:!0}}},r=n,a=t(1001),c=(0,a.Z)(r,s,_,!1,null,null,null),l=c.exports}}]);
+//# sourceMappingURL=about.6c107087.js.map
