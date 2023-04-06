@@ -16,7 +16,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getProducts");
-
     auth.onAuthStateChanged((user) => {
       this.$store.dispatch("fetchUser", user);
       this.$store.dispatch("getCartItems", user);

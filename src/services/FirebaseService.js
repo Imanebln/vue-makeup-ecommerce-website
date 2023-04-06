@@ -1,5 +1,4 @@
 import { auth, db } from "@/firebaseConfig";
-import axios from "axios";
 import {
   collection,
   doc,
@@ -10,6 +9,7 @@ import {
   query,
   where,
 } from "firebase/firestore";
+
 const productsRef = collection(db, "products");
 const cartRef = collection(db, "cart");
 
@@ -66,17 +66,10 @@ export default {
 
   async removeFromCart(id) {
     try {
-      //   const itemToDeleteQuery = query(cartRef, where("id", "==", id));
-      //   const itemToDeleteData = await getDocs(itemToDeleteQuery);
-      //   const itemId = itemToDeleteData.docs[0].id;
       const itemToDelete = doc(db, "cart", id);
       await deleteDoc(itemToDelete);
     } catch (err) {
       console.log(err);
     }
   },
-
-  // async emptyCart(item) {
-  //   return await deleteDoc(doc(db, "cart", item.id));
-  // },
 };

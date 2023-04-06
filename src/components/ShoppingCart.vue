@@ -156,10 +156,7 @@ export default {
       this.toggleCart();
     },
     removeItem(item) {
-      this.$store.dispatch("removeItemFromCart", {
-        item,
-        user: this.$store.getters.user,
-      });
+      this.$store.dispatch("removeItemFromCart", item);
     },
     // calculate cart total price
     cartTotalPrice() {
