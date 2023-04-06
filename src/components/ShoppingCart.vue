@@ -80,7 +80,7 @@
           </div>
         </div>
       </div>
-      <div v-show="user.loggedIn" class="amount">
+      <div v-show="user.loggedIn && inCart.length !== 0" class="amount">
         <div class="subtotal">
           <span>Subtotal</span>
           <span
@@ -110,7 +110,7 @@
           >
         </div>
       </div>
-      <div v-show="user.loggedIn" class="checkout">
+      <div v-show="user.loggedIn && inCart.length !== 0" class="checkout">
         <!-- <router-link to="/checkout"> -->
         <button class="checkout-btn" @click="handleCheckout()">
           Proceed To Checkout
