@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- <div v-if="user.loggedIn">Welcome, {{ user.data.displayName }}</div> -->
     <Showcase />
     <Banner />
     <CategoryProducts id="bestSellers" :isStore="false" />
@@ -11,8 +10,6 @@
 </template>
 
 <script>
-// @ is an alias to /src
-import { computed, ref } from "vue";
 import CategoryProducts from "../components/CategoryProducts.vue";
 import Banner from "../components/Banner.vue";
 import Subscribe from "../components/Subscribe.vue";
@@ -27,9 +24,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getProducts");
-    // auth.onAuthStateChanged((user) => {
-    //   this.$store.dispatch("fetchUser", user);
-    // });
   },
   created() {
     this.$store.dispatch("getProducts");
