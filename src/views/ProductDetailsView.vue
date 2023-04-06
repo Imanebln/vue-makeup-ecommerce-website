@@ -112,7 +112,6 @@
 </template>
 
 <script>
-import ProductService from "@/services/ProductService";
 import FirebaseService from "@/services/FirebaseService";
 export default {
   // props: ["id"],
@@ -123,21 +122,11 @@ export default {
       inputValue: 1,
     };
   },
-  mounted() {
-    // FirebaseService.getProductById(this.id).then((res) => {
-    //   this.product = res;
-    // });
-  },
   created() {
     FirebaseService.getProductById(this.id).then((res) => {
       this.product = res;
     });
     console.log(this.product);
-    // ProductService.getProductById(this.id)
-    //   .then((res) => {
-    //     this.product = res.data;
-    //   })
-    //   .catch((err) => console.log(err.message));
   },
   computed: {
     cartItem() {
@@ -184,9 +173,6 @@ body {
   max-width: 1100px;
   margin: 0 auto;
 }
-/* .card-wrapper .card {
-  max-height: 1000px;
-} */
 img {
   width: 100%;
   display: block;

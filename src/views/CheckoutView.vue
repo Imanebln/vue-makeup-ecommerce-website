@@ -302,7 +302,6 @@ export default {
   },
   mounted() {
     this.$store.dispatch("getCartItems");
-    // this.$store.dispatch("getProducts");
   },
   computed: {
     inCart() {

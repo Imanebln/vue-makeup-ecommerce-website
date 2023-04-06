@@ -16,7 +16,6 @@ export default {
   },
   computed: {
     products() {
-      // console.log(this.$store.state.products);
       return this.$store.state.products;
     },
   },
@@ -30,10 +29,6 @@ const makeupTabs = ref([
 ]);
 
 const categoryTitle = ref("Categories");
-// export default {
-//   name: "HomeView",
-//   components: { Banner, Subscribe, Featured, Blog },
-// };
 </script>
 
 <style></style>
