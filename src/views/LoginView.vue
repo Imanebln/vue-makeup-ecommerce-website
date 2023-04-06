@@ -81,6 +81,8 @@
 
 <script>
 import { ref } from "vue";
+import { auth, provider } from "@/firebaseConfig";
+import { signInWithPopup } from "firebase/auth";
 export default {
   data() {
     return {
@@ -125,6 +127,9 @@ export default {
       } catch (err) {
         console.log(err.message);
       }
+    },
+    async sinInWithGoogle() {
+      await signInWithPopup(auth, provider);
     },
   },
 };
@@ -239,7 +244,7 @@ input {
   width: 768px;
   max-width: 100%;
   min-height: 480px;
-  z-index: 1000000;
+  z-index: 999;
 }
 
 .form-container {
@@ -397,6 +402,6 @@ footer a {
   text-decoration: none;
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 588px) {
 }
 </style>

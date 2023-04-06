@@ -1,12 +1,19 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import NotFoundView from "../views/NotFoundView.vue";
 import ProductsView from "../views/ProductsView.vue";
 import ProductDetailsView from "../views/ProductDetailsView.vue";
 import LoginView from "../views/LoginView.vue";
 Vue.use(VueRouter);
 
 const routes = [
+  {
+    path: "*",
+    name: "not-found",
+    component: NotFoundView,
+    meta: { title: "Glam Haven - Not Found!" },
+  },
   {
     path: "/",
     name: "home",

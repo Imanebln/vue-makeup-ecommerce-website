@@ -1,7 +1,7 @@
 <template>
   <nav>
     <div class="nav-inner">
-      <div class="navbar-icon">
+      <div class="navbar-icon" @click="toggleSidebar">
         <span class="icon">
           <svg
             width="24"
@@ -136,6 +136,20 @@
         </span>
       </div>
     </div>
+    <div :class="{ overlay: showSidebar }" @click="toggleSidebar">
+      <div class="sidebar" :class="{ active: showSidebar }">
+        <router-link class="sidebar-header" to="/"
+          ><h4>Glam Haven</h4></router-link
+        >
+        <ul>
+          <li @click="goToStore()">Store</li>
+          <li>BestSellers</li>
+          <li>Contact</li>
+          <li>About US</li>
+        </ul>
+      </div>
+    </div>
+
     <ShoppingCart :showCart="showCart" :toggleCart="toggleCart" />
   </nav>
 </template>
@@ -146,6 +160,7 @@ export default {
   data() {
     return {
       showCart: false,
+      showSidebar: false,
     };
   },
   mounted() {
@@ -164,6 +179,9 @@ export default {
     },
   },
   methods: {
+    toggleSidebar() {
+      this.showSidebar = !this.showSidebar;
+    },
     toggleCart() {
       this.showCart = !this.showCart;
     },
@@ -173,6 +191,9 @@ export default {
     async logout() {
       await this.$store.dispatch("logOut");
       this.$router.push("/login");
+    },
+    goToStore() {
+      this.$router.push("/products");
     },
   },
   components: { ShoppingCart },
@@ -227,11 +248,76 @@ nav .nav-inner {
   align-items: center;
   cursor: pointer;
 }
-/* Sidebar */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 300px;
+  height: 100%;
+  background-color: #fff;
+  border-left: 2px solid #f8f8f8;
+  padding: 20px;
+  box-sizing: border-box;
+  z-index: 10000000000000000000000000000;
+  transition: all 0.2s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+.sidebar-header h4 {
+  text-decoration: none !important;
+}
+.sidebar h4 {
+  color: #121212;
+  font-size: 30px;
+  font-family: "Charm";
+  margin-bottom: 50px;
+}
+.sidebar ul {
+  width: 100%;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.sidebar li {
+  padding: 20px 0;
+  font-size: 18px;
+  font-family: "Nunito Sans";
+  display: block;
+  width: 100%;
+  color: #121212;
+}
+.sidebar ul li a {
+  text-decoration: none;
+}
+.sidebar li:hover {
+  color: #c71f01;
+  cursor: pointer;
+  font-weight: 600;
+}
+.sidebar.active {
+  left: 0;
+}
 /* .side {
   position: absolute;
 } */
-.sidebar {
+/* .sidebar {
   display: none;
   position: fixed;
   top: 0;
@@ -259,7 +345,7 @@ nav .nav-inner {
 .sidebar-item a {
   color: #fff;
   text-decoration: none;
-}
+} */
 .badge {
   position: relative;
   top: -7px;
@@ -297,9 +383,6 @@ nav .nav-inner {
   .nav-inner .navbar-icon {
     display: block;
     margin-left: 2rem;
-  }
-  .sidebar {
-    display: block;
   }
 }
 </style>
