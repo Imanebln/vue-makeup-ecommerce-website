@@ -102,12 +102,16 @@
             <div class="card-number">
               <label for="card-number" class="label-default">Card number</label>
               <input
+                v-model="cardNumber"
                 type="number"
                 name="card-number"
                 id="card-number"
                 class="input-default"
                 required
               />
+              <p class="error" v-if="errors.cardNumberInvalidError">
+                Enter a valid card number
+              </p>
             </div>
 
             <div class="input-flex">
@@ -144,12 +148,16 @@
               <div class="cvv">
                 <label for="cvv" class="label-default">CVV</label>
                 <input
+                  v-model="cvv"
                   type="number"
                   name="cvv"
                   id="cvv"
                   class="input-default"
                   required
                 />
+                <p class="error" v-if="errors.cardNumberInvalidError">
+                  Enter a valid cvv
+                </p>
               </div>
             </div>
             <button type="submit" class="btn btn-primary">
@@ -278,10 +286,18 @@ export default {
   data() {
     return {
       shipping: 7,
-      cardHolderNAme: "",
-      cardNumber: "",
-      expMonth: 12,
-      expDay: 31,
+      cardHolderName: "",
+      cardNumber: null,
+      expiryDate: null,
+      cvv: null,
+      errors: {
+        cardNumberError: false,
+        cardNumberInvalidError: false,
+        expiryDateError: false,
+        expiryDateInvalidError: false,
+        cvvError: false,
+        cvvInvalidError: false,
+      },
     };
   },
   mounted() {
@@ -295,7 +311,13 @@ export default {
   },
   methods: {
     handlePay() {
-      this.$router.push("/confirmation");
+      console.log(this.checkForm());
+      if (this.checkForm()) {
+        this.inCart.forEach((item) => {
+          this.$store.dispatch("removeItemFromCart", item);
+        });
+        this.$router.push("/confirmation");
+      }
     },
     incQuantity(item) {
       this.$store.dispatch("incrementQuItem", item);
@@ -321,7 +343,65 @@ export default {
       }
       return this.cartTotalPrice();
     },
-    //handle month exp change
+    //handle validation
+    validCardNumber(cardNumber) {
+      var re = /^[0-9]{13,19}$/;
+      return re.test(cardNumber);
+    },
+    validExpiryDate(expiryDate) {
+      var re = /^(0[1-9]|1[0-2])\/?([0-9]{4}|[0-9]{2})$/;
+      if (!re.test(expiryDate)) {
+        return false;
+      }
+
+      var today = new Date();
+      var parts = expiryDate.split("/");
+      var month = parseInt(parts[0]);
+      var year = parseInt(parts[1]);
+      if (year < 100) {
+        year += 2000;
+      }
+      var expiry = new Date(year, month - 1, 1);
+      expiry.setMonth(expiry.getMonth() + 1);
+      expiry.setDate(expiry.getDate() - 1);
+      return expiry >= today;
+    },
+
+    onExpiryDateChange() {
+      if (this.expiryDate.length === 2 && !this.expiryDate.includes("/")) {
+        this.expiryDate += "/";
+      }
+    },
+
+    validCvv(cvv) {
+      var re = /^[0-9]{3,4}$/;
+      return re.test(cvv);
+    },
+    checkForm() {
+      this.errors = [];
+
+      if (!this.validCardNumber(this.cardNumber)) {
+        this.errors = { ...this.errors, cardNumberInvalidError: true };
+      }
+
+      // if (!this.expiryDate) {
+      //   this.errors = { ...this.errors, expiryDateError: true };
+      // } else if (!this.validExpiryDate(this.expiryDate)) {
+      //   this.errors = { ...this.errors, expiryDateInvalidError: true };
+      // }
+
+      if (!this.cvv) {
+        this.errors = { ...this.errors, cvvError: true };
+      } else if (!this.validCvv(this.cvv)) {
+        this.errors = { ...this.errors, cvvInvalidError: true };
+      }
+
+      if (Object.values(this.errors).every((error) => !error)) {
+        return true;
+      }
+
+      return false;
+    },
   },
 };
 </script>
@@ -510,7 +590,10 @@ input::-webkit-outer-spin-button {
 .card-number {
   margin-bottom: 20px;
 }
-
+.error {
+  color: red;
+  margin-top: 10px;
+}
 .card-number input,
 .cvv input {
   letter-spacing: 3px;
@@ -518,7 +601,7 @@ input::-webkit-outer-spin-button {
 
 .input-flex {
   display: flex;
-  align-items: center;
+  align-items: start;
   gap: 30px;
 }
 /* .input-flex .expire-date {

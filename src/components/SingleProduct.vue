@@ -1,9 +1,8 @@
 <template>
   <div class="single-product">
     <div class="img-container">
-      <router-link
-        :to="{ name: 'product-details', params: { id: product.id } }"
-      >
+      <!-- params: { id: product.id } -->
+      <router-link :to="'product/' + product.id">
         <img :src="product.image" alt="product Image" />
       </router-link>
       <div v-if="product.onSale" class="sale">-50%</div>
@@ -40,7 +39,11 @@ export default {
   data() {
     return {};
   },
-  computed: {},
+  computed: {
+    user() {
+      return this.$store.getters.user;
+    },
+  },
   methods: {
     addToCart() {
       let item = {
@@ -53,7 +56,10 @@ export default {
         quantity: 1,
       };
       if (this.$store.getters.user.loggedIn) {
-        this.$store.dispatch("addItem", item);
+        this.$store.dispatch("addItemToFirestoreCart", {
+          item,
+          user: this.user.data,
+        });
       } else {
         this.$router.push("/login");
       }

@@ -113,23 +113,36 @@
 
 <script>
 import ProductService from "@/services/ProductService";
-
+import FirebaseService from "@/services/FirebaseService";
 export default {
-  props: ["id"],
+  // props: ["id"],
   data() {
     return {
       product: {},
+      id: Number(this.$route.params.id),
       inputValue: 1,
     };
   },
+  mounted() {
+    // FirebaseService.getProductById(this.id).then((res) => {
+    //   this.product = res;
+    // });
+  },
   created() {
-    ProductService.getProductById(this.id)
-      .then((res) => {
-        this.product = res.data;
-      })
-      .catch((err) => console.log(err.message));
+    FirebaseService.getProductById(this.id).then((res) => {
+      this.product = res;
+    });
+    console.log(this.product);
+    // ProductService.getProductById(this.id)
+    //   .then((res) => {
+    //     this.product = res.data;
+    //   })
+    //   .catch((err) => console.log(err.message));
   },
   computed: {
+    cartItem() {
+      return this.$store.state.cartItem;
+    },
     inCart() {
       return this.$store.state.inCart;
     },
@@ -149,7 +162,10 @@ export default {
         quantity: this.inputValue,
       };
       if (this.$store.getters.user.loggedIn) {
-        this.$store.dispatch("addItem", item);
+        this.$store.dispatch("addItemToFirestoreCart", {
+          item,
+          user: this.user.data,
+        });
       } else {
         this.$router.push("/login");
       }

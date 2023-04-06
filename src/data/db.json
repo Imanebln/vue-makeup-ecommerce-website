@@ -67,24 +67,14 @@
   ],
   "inCart": [
     {
-      "productId": 1,
-      "title": "Red Lipstick",
+      "productId": 2,
+      "title": "Peachy Lipstick",
       "category": "lips",
-      "price": 99.89,
-      "onSale": false,
-      "image": "https://images.unsplash.com/photo-1587303876752-91efb6315dcc?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80",
+      "price": 135.99,
+      "onSale": true,
+      "image": "https://images.unsplash.com/photo-1537277033580-8792f1e42c47?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=387&q=80",
       "quantity": 1,
       "id": 1
-    },
-    {
-      "productId": 3,
-      "title": "Contouring Palette",
-      "category": "face",
-      "price": 149.99,
-      "onSale": false,
-      "image": "https://images.unsplash.com/photo-1590156546946-ce55a12a6a5d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1935&q=80",
-      "quantity": 2,
-      "id": 3
     }
   ],
   "users": [

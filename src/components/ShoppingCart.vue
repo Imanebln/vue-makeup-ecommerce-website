@@ -4,9 +4,13 @@
     <div class="sidebar-cart" :class="{ active: showCart }">
       <h3>Shopping Cart</h3>
 
-      <h4 class="no-products" v-show="!user.loggedIn">
+      <h4 class="no-products" v-show="user.loggedIn && inCart.length === 0">
         No products in your cart.
       </h4>
+      <h4 class="no-products" v-show="!user.loggedIn">Login to shop !</h4>
+      <button class="sign-in" v-show="!user.loggedIn" @click="signIn">
+        Sign in!
+      </button>
       <div class="cart-item-box">
         <div
           v-show="user.loggedIn"
@@ -112,13 +116,8 @@ export default {
       shipping: 7,
     };
   },
-  // computed: mapState(["inCart"]),
   mounted() {
     this.$store.dispatch("getProducts");
-    this.$store.dispatch("getCartItems");
-    auth.onAuthStateChanged((user) => {
-      this.$store.dispatch("fetchUser", user);
-    });
   },
   computed: {
     inCart() {
@@ -140,7 +139,10 @@ export default {
       this.toggleCart();
     },
     removeItem(item) {
-      this.$store.dispatch("removeItemFromCart", item);
+      this.$store.dispatch("removeItemFromCart", {
+        item,
+        user: this.$store.getters.user,
+      });
     },
     // calculate cart total price
     cartTotalPrice() {
@@ -156,6 +158,11 @@ export default {
         return this.cartTotalPrice() + 7;
       }
       return this.cartTotalPrice();
+    },
+    // sign in to shop
+    signIn() {
+      this.toggleCart();
+      this.$router.push("/login");
     },
   },
 };
@@ -215,7 +222,7 @@ export default {
   height: 500px;
   overflow: hidden;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 /* Customize scrollbar */
@@ -371,7 +378,24 @@ export default {
   border: 1px solid cornflowerblue;
   border-radius: 3px;
 }
+
 .checkout .checkout-btn:hover {
+  background-color: cornflowerblue;
+  color: #fff;
+  border: none;
+}
+.sign-in {
+  padding: 6px 12px;
+  margin: 15px 20px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  background-color: #fff;
+  color: cornflowerblue;
+  border: 1px solid cornflowerblue;
+  border-radius: 3px;
+}
+.sign-in:hover {
   background-color: cornflowerblue;
   color: #fff;
   border: none;

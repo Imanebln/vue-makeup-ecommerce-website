@@ -6,14 +6,20 @@ import {
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import firebase from "firebase/app";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import CartService from "@/services/CartService";
 import ProductService from "@/services/ProductService";
 import { auth, db } from "@/firebaseConfig";
-import { collection, doc, setDoc } from "firebase/firestore";
-
+import {
+  collection,
+  doc,
+  setDoc,
+  addDoc,
+  getDocs,
+  query,
+} from "firebase/firestore";
+import FirebaseService from "@/services/FirebaseService";
 Vue.use(Vuex);
 
 const API_URL = "http://localhost:4000/";
@@ -87,22 +93,42 @@ export default new Vuex.Store({
   },
   actions: {
     async getProducts(state) {
-      ProductService.getProducts()
-        .then((res) => {
-          state.commit("setProducts", res.data);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
+      let products = await FirebaseService.getProducts();
+      state.commit("setProducts", products);
+      // ProductService.getProducts()
+      //   .then((res) => {
+      //     state.commit("setProducts", products);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error.message);
+      //   });
     },
-    async getCartItems(state) {
-      CartService.getCartItems()
-        .then((res) => {
-          state.commit("setCart", res.data);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
+    async getCartItems(state, user) {
+      let cart = await FirebaseService.getCartItems(user.uid);
+      console.log(cart);
+      state.commit("setCart", cart);
+      // CartService.getCartItems()
+      //   .then((res) => {
+      //     state.commit("setCart", res.data);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error.message);
+      //   });
+    },
+    async addItemToFirestoreCart(state, { item, user }) {
+      const existingProductIndex = state.getters.inCart.findIndex(
+        (product) => product.productId === item.productId
+      );
+      if (existingProductIndex !== -1) {
+        const updatedCart = [...state.getters.inCart];
+        const productCart = updatedCart[existingProductIndex];
+        productCart.quantity += 1;
+        await FirebaseService.updateItemQuantity(productCart);
+        state.commit("incrementItemQuantity", productCart);
+      } else {
+        await FirebaseService.addToCart(item, user);
+        state.commit("addToCart", item);
+      }
     },
     async addItem(state, item) {
       // check if the product already exists in the cart
@@ -149,27 +175,52 @@ export default new Vuex.Store({
     //     });
     // },
     async incrementQuItem(state, item) {
-      await CartService.incrementItemQu(item)
-        .then((res) => {
-          state.commit("incrementItemQu", res.data);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
+      const existingProductIndex = state.getters.inCart.findIndex(
+        (product) => product.productId === item.productId
+      );
+      if (existingProductIndex !== -1) {
+        const updatedCart = [...state.getters.inCart];
+        const productCart = updatedCart[existingProductIndex];
+        productCart.quantity += 1;
+        await FirebaseService.updateItemQuantity(productCart);
+        state.commit("incrementItemQu", productCart);
+      }
+      // await CartService.incrementItemQu(item)
+      //   .then((res) => {
+      //     state.commit("incrementItemQu", res.data);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error.message);
+      //   });
     },
     async decrementQuItem(state, item) {
-      await CartService.decrementItemQu(item)
-        .then((res) => {
-          state.commit("decrementItemQu", res.data);
-        })
-        .catch((error) => {
-          console.error(error.message);
-        });
+      const existingProductIndex = state.getters.inCart.findIndex(
+        (product) => product.productId === item.productId
+      );
+      if (existingProductIndex !== -1) {
+        const updatedCart = [...state.getters.inCart];
+        const productCart = updatedCart[existingProductIndex];
+        if (productCart.quantity > 1) {
+          productCart.quantity -= 1;
+        }
+
+        await FirebaseService.updateItemQuantity(productCart);
+        state.commit("incrementItemQu", productCart);
+      }
+      // await CartService.decrementItemQu(item)
+      //   .then((res) => {
+      //     state.commit("decrementItemQu", res.data);
+      //   })
+      //   .catch((error) => {
+      //     console.error(error.message);
+      //   });
     },
     async removeItemFromCart(state, item) {
-      await CartService.deleteItemFromCart(item).then((res) => {
-        state.commit("removeFromCart", item);
-      });
+      await FirebaseService.removeFromCart(item.id);
+      state.commit("removeFromCart", item);
+      // await CartService.deleteItemFromCart(item).then((res) => {
+      //   state.commit("removeFromCart", item);
+      // });
     },
     async register(state, { email, password, name }) {
       const response = await createUserWithEmailAndPassword(
@@ -205,6 +256,7 @@ export default new Vuex.Store({
         state.commit("SET_USER", {
           displayName: user.displayName,
           email: user.email,
+          uid: user.uid,
         });
       } else {
         state.commit("SET_USER", null);
