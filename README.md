@@ -1,5 +1,5 @@
 # vue-ecommerce-makeup-app
-[link to live preview](https://iboulouane-glam-haven.netlify.app/){:target="_blank"}
+[link to live preview](https://iboulouane-glam-haven.netlify.app/)
 ## Project setup
 ```
 npm install
