@@ -52,7 +52,6 @@ export default {
   },
 
   async addToCart(item, user) {
-    console.log(user);
     await addDoc(cartRef, {
       ...item,
       userId: user?.uid,
@@ -68,8 +67,23 @@ export default {
     try {
       const itemToDelete = doc(db, "cart", id);
       await deleteDoc(itemToDelete);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
+  },
+
+  // reviews services
+  async getProductReviews(productId) {
+    let reviews = [];
+    const querySnap = await getDocs(
+      query(collection(db, "reviews"), where("productId", "==", productId))
+    );
+    querySnap.forEach((doc) => {
+      reviews.push(doc.data());
+    });
+
+    return reviews;
+  },
+
+  async addReview(item) {
+    return await addDoc(collection(db, "reviews"), item);
   },
 };

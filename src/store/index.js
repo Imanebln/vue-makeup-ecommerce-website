@@ -19,11 +19,13 @@ export default new Vuex.Store({
       loggedIn: false,
       data: null,
     },
+    reviews: [],
   },
   getters: {
     products: (state) => state.products,
     inCart: (state) => state.inCart,
     user: (state) => state.user,
+    reviews: (state) => state.reviews,
   },
   mutations: {
     setProducts(state, payload) {
@@ -36,11 +38,9 @@ export default new Vuex.Store({
       state.inCart = payload;
     },
     addToCart(state, payload) {
-      console.log(payload);
       state.inCart.push(payload);
     },
     incrementItemQuantity(state, payload) {
-      console.log(payload);
       state.inCart = state.inCart.map((item) => {
         if (item.productId === payload.id) {
           item.quantity += 1;
@@ -49,7 +49,6 @@ export default new Vuex.Store({
       });
     },
     incrementItemQu(state, payload) {
-      console.log(payload);
       state.inCart = state.inCart.map((item) => {
         if (item.productId === payload.id) {
           item.quantity += 1;
@@ -58,7 +57,6 @@ export default new Vuex.Store({
       });
     },
     decrementItemQu(state, payload) {
-      console.log(payload);
       state.inCart = state.inCart.map((item) => {
         if (item.productId === payload.id && item.quantity > 1) {
           item.quantity -= 1;
@@ -78,6 +76,12 @@ export default new Vuex.Store({
     SET_LOGGED_IN(state, value) {
       state.user.loggedIn = value;
     },
+    SET_REVIEWS(state, payload) {
+      state.reviews = payload;
+    },
+    ADD_REVIEW(state, payload) {
+      state.reviews.push(payload);
+    },
   },
   actions: {
     async getProducts(state) {
@@ -85,8 +89,7 @@ export default new Vuex.Store({
       state.commit("setProducts", products);
     },
     async getCartItems(state, user) {
-      let cart = await FirebaseService.getCartItems(user.uid);
-      console.log(cart);
+      let cart = await FirebaseService.getCartItems(user?.uid);
       state.commit("setCart", cart);
     },
     async addItemToFirestoreCart(state, { item, user }) {
@@ -142,7 +145,6 @@ export default new Vuex.Store({
         password
       );
       if (response) {
-        console.log(response);
         state.commit("SET_USER", response.user);
       } else {
         throw new Error("Unable to register user");
@@ -151,8 +153,6 @@ export default new Vuex.Store({
     async logIn(state, { email, password }) {
       const response = await signInWithEmailAndPassword(auth, email, password);
       if (response) {
-        console.log(response);
-        console.log(state.user);
       } else {
         throw new Error("login failed");
       }
@@ -172,6 +172,20 @@ export default new Vuex.Store({
       } else {
         state.commit("SET_USER", null);
       }
+    },
+
+    async fetchProductReviews(state, id) {
+      let reviews = await FirebaseService.getProductReviews(id);
+      state.commit("SET_REVIEWS", reviews);
+    },
+
+    emptyReviewsState(state) {
+      state.commit("SET_REVIEWS", []);
+    },
+
+    async addReview(state, item) {
+      await FirebaseService.addReview(item);
+      state.commit("ADD_REVIEW", item);
     },
   },
   modules: {},

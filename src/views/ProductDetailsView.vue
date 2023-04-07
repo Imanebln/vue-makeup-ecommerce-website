@@ -37,12 +37,13 @@
           <h2 class="product-title">{{ product.title }}</h2>
           <a href="#" class="product-link">visit category store</a>
           <div class="product-rating">
-            <i class="fas fa-star"></i>
+            <!-- <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star"></i>
             <i class="fas fa-star-half-alt"></i>
-            <span>4.7(21)</span>
+            <span>4.7(21)</span> -->
+            <rating :fixed-rating="ratingAvgVal"></rating>
           </div>
 
           <div class="product-price">
@@ -88,7 +89,9 @@
             <button type="button" class="btn" @click="addToCart()">
               Add to Cart <i class="fas fa-shopping-cart"></i>
             </button>
-            <button type="button" class="btn">Shop Now</button>
+            <button type="button" class="btn" @click="shopNow()">
+              Shop Now
+            </button>
           </div>
 
           <div class="social-links">
@@ -112,187 +115,32 @@
         </div>
       </div>
     </div>
-    <section id="testimonials">
-      <!--heading--->
-      <div class="testimonial-heading">
-        <span>Reviews</span>
-        <h4>Clients Says</h4>
-      </div>
-      <!--testimonials-box-container------>
-      <div class="testimonial-box-container">
-        <!--BOX-1-------------->
-        <div class="testimonial-box">
-          <!--top------------------------->
-          <div class="box-top">
-            <!--profile----->
-            <div class="profile">
-              <!--img---->
-              <div class="profile-img">
-                <img
-                  src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png"
-                />
-              </div>
-              <!--name-and-username-->
-              <div class="name-user">
-                <strong>Imane Boulouane</strong>
-                <span>@imaneboulouane</span>
-              </div>
-            </div>
-            <!--reviews------>
-            <div class="reviews">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="far fa-star"></i
-              ><!--Empty star-->
-            </div>
-          </div>
-          <!--Comments---------------------------------------->
-          <div class="client-comment">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem, quaerat quis? Provident temporibus architecto
-              asperiores nobis maiores nisi a. Quae doloribus ipsum aliquam
-              tenetur voluptates incidunt blanditiis sed atque cumque.
-            </p>
-          </div>
-        </div>
-        <!--BOX-2-------------->
-        <div class="testimonial-box">
-          <!--top------------------------->
-          <div class="box-top">
-            <!--profile----->
-            <div class="profile">
-              <!--img---->
-              <div class="profile-img">
-                <img
-                  src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png"
-                />
-              </div>
-              <!--name-and-username-->
-              <div class="name-user">
-                <strong>Imane Boulouane</strong>
-                <span>@imaneboulouane</span>
-              </div>
-            </div>
-            <!--reviews------>
-            <div class="reviews">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i
-              ><!--Empty star-->
-            </div>
-          </div>
-          <!--Comments---------------------------------------->
-          <div class="client-comment">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem, quaerat quis? Provident temporibus architecto
-              asperiores nobis maiores nisi a. Quae doloribus ipsum aliquam
-              tenetur voluptates incidunt blanditiis sed atque cumque.
-            </p>
-          </div>
-        </div>
-        <!--BOX-3-------------->
-        <div class="testimonial-box">
-          <!--top------------------------->
-          <div class="box-top">
-            <!--profile----->
-            <div class="profile">
-              <!--img---->
-              <div class="profile-img">
-                <img
-                  src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png"
-                />
-              </div>
-              <!--name-and-username-->
-              <div class="name-user">
-                <strong>Imane Boulouane</strong>
-                <span>@imaneboulouane</span>
-              </div>
-            </div>
-            <!--reviews------>
-            <div class="reviews">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="far fa-star"></i
-              ><!--Empty star-->
-            </div>
-          </div>
-          <!--Comments---------------------------------------->
-          <div class="client-comment">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem, quaerat quis? Provident temporibus architecto
-              asperiores nobis maiores nisi a. Quae doloribus ipsum aliquam
-              tenetur voluptates incidunt blanditiis sed atque cumque.
-            </p>
-          </div>
-        </div>
-        <!--BOX-4-------------->
-        <div class="testimonial-box">
-          <!--top------------------------->
-          <div class="box-top">
-            <!--profile----->
-            <div class="profile">
-              <!--img---->
-              <div class="profile-img">
-                <img
-                  src="https://cdn.landesa.org/wp-content/uploads/default-user-image.png"
-                />
-              </div>
-              <!--name-and-username-->
-              <div class="name-user">
-                <strong>Imane Boulouane</strong>
-                <span>@imaneboulouane</span>
-              </div>
-            </div>
-            <!--reviews------>
-            <div class="reviews">
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="fas fa-star"></i>
-              <i class="far fa-star"></i
-              ><!--Empty star-->
-            </div>
-          </div>
-          <!--Comments---------------------------------------->
-          <div class="client-comment">
-            <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Exercitationem, quaerat quis? Provident temporibus architecto
-              asperiores nobis maiores nisi a. Quae doloribus ipsum aliquam
-              tenetur voluptates incidunt blanditiis sed atque cumque.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Reviews :product="this.product" @avgRateChange="getAvgRate" />
   </div>
 </template>
 
 <script>
+import Rating from "@/components/Rating.vue";
 import FirebaseService from "@/services/FirebaseService";
+import Reviews from "@/components/Reviews.vue";
 export default {
   // props: ["id"],
+  components: {
+    Reviews,
+    Rating,
+  },
   data() {
     return {
       product: {},
       id: Number(this.$route.params.id),
       inputValue: 1,
+      ratingAvgVal: 0,
     };
   },
   created() {
     FirebaseService.getProductById(this.id).then((res) => {
       this.product = res;
     });
-    console.log(this.product);
   },
   computed: {
     cartItem() {
@@ -306,6 +154,13 @@ export default {
     },
   },
   methods: {
+    ratingAvg(avg) {
+      this.ratingAvgVal = avg;
+    },
+    shopNow() {
+      this.addToCart();
+      this.$router.push("/checkout");
+    },
     addToCart() {
       let item = {
         productId: this.product.id,
@@ -324,6 +179,9 @@ export default {
       } else {
         this.$router.push("/login");
       }
+    },
+    getAvgRate(rateAvg) {
+      this.ratingAvgVal = rateAvg;
     },
   },
 };
@@ -560,123 +418,5 @@ img {
   .product-content {
     padding-top: 0;
   }
-}
-a {
-  text-decoration: none;
-}
-#testimonials {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  margin-bottom: 50px;
-  /* width: 100%; */
-}
-.testimonial-heading {
-  letter-spacing: 1px;
-  margin: 30px 0px;
-  padding: 10px 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.testimonial-heading span {
-  font-size: 1.3rem;
-  color: #252525;
-  margin-bottom: 10px;
-  letter-spacing: 2px;
-  text-transform: uppercase;
-}
-.testimonial-box-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: wrap;
-  width: 100%;
-}
-.testimonial-box {
-  width: 500px;
-  box-shadow: 2px 2px 30px rgba(0, 0, 0, 0.1);
-  background-color: #ffffff;
-  padding: 20px;
-  margin: 15px;
-  cursor: pointer;
-}
-.profile-img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  overflow: hidden;
-  margin-right: 10px;
-}
-.profile-img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-}
-.profile {
-  display: flex;
-  align-items: center;
-}
-.name-user {
-  display: flex;
-  flex-direction: column;
-}
-.name-user strong {
-  color: #3d3d3d;
-  font-size: 1.1rem;
-  letter-spacing: 0.5px;
-}
-.name-user span {
-  color: #979797;
-  font-size: 0.8rem;
-}
-.reviews {
-  color: #f9d71c;
-}
-.box-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 20px;
-}
-.client-comment p {
-  font-size: 0.9rem;
-  color: #4b4b4b;
-}
-.testimonial-box:hover {
-  transform: translateY(-10px);
-  transition: all ease 0.3s;
-}
-
-@media (max-width: 1060px) {
-  .testimonial-box {
-    width: 45%;
-    padding: 10px;
-  }
-}
-@media (max-width: 790px) {
-  .testimonial-box {
-    width: 100%;
-  }
-  .testimonial-heading h1 {
-    font-size: 1.4rem;
-  }
-}
-@media (max-width: 340px) {
-  .box-top {
-    flex-wrap: wrap;
-    margin-bottom: 10px;
-  }
-  .reviews {
-    margin-top: 10px;
-  }
-}
-::selection {
-  color: #ffffff;
-  background-color: #252525;
 }
 </style>

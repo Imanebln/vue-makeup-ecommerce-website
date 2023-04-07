@@ -32,6 +32,10 @@ export default {
   --dark-alt: #334155;
   --light: #333;
   --sidebar-width: 300px;
+  --transition: all 400ms ease;
+  --container-width-lg: 75%;
+  --container-width-md: 86%;
+  --container-width-sm: 90%;
 }
 * {
   margin: 0;
@@ -39,6 +43,9 @@ export default {
   box-sizing: border-box;
   font-family: "Nunito Sans", sans-serif;
   text-decoration: none;
+}
+html {
+  scroll-behavior: smooth;
 }
 .container {
   max-width: calc(1440px - 130px);

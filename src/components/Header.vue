@@ -155,6 +155,7 @@
 </template>
 
 <script>
+import { auth } from "@/firebaseConfig";
 import ShoppingCart from "./ShoppingCart.vue";
 export default {
   data() {
@@ -162,13 +163,6 @@ export default {
       showCart: false,
       showSidebar: false,
     };
-  },
-  mounted() {
-    this.$store.dispatch("getProducts");
-    this.$store.dispatch("getCartItems");
-    auth.onAuthStateChanged((user) => {
-      this.$store.dispatch("fetchUser", user);
-    });
   },
   computed: {
     cartLength() {

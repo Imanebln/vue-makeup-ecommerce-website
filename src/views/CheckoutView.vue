@@ -1,7 +1,6 @@
 <template>
   <main class="container">
     <h1 class="heading">
-      <!-- <ion-icon name="cart-outline"></ion-icon>  -->
       <span class="icon">
         <svg
           width="18"
@@ -32,14 +31,28 @@
         <div class="payment-form">
           <div class="payment-method">
             <button class="method selected">
-              <ion-icon name="card"></ion-icon>
-
+              <span
+                ><svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect width="24" height="24" fill="white" />
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M2 11H22L22 15.0658C22.0001 15.9523 22.0001 16.7161 21.9179 17.3278C21.8297 17.9833 21.631 18.6117 21.1213 19.1213C20.6117 19.631 19.9833 19.8297 19.3278 19.9179C18.7161 20.0001 17.9523 20.0001 17.0658 20H6.93414C6.04767 20.0001 5.28387 20.0001 4.67221 19.9179C4.0167 19.8297 3.38835 19.631 2.87869 19.1213C2.36902 18.6117 2.17028 17.9833 2.08215 17.3278C1.99991 16.7161 1.99995 15.9523 2 15.0658L2 11ZM5 14C5 13.4477 5.44772 13 6 13H8C8.55228 13 9 13.4477 9 14C9 14.5523 8.55228 15 8 15H6C5.44772 15 5 14.5523 5 14ZM10 14C10 13.4477 10.4477 13 11 13H13C13.5523 13 14 13.4477 14 14C14 14.5523 13.5523 15 13 15H11C10.4477 15 10 14.5523 10 14Z"
+                    fill="#323232"
+                  />
+                  <path
+                    d="M22 9.00001L22 8.93418C22.0001 8.04769 22.0001 7.28387 21.9179 6.67221C21.8297 6.0167 21.631 5.38835 21.1213 4.87869C20.6117 4.36902 19.9833 4.17028 19.3278 4.08215C18.7161 3.99991 17.9523 3.99995 17.0658 4L6.93418 4C6.04769 3.99995 5.28388 3.99991 4.67222 4.08215C4.0167 4.17028 3.38835 4.36902 2.87869 4.87868C2.36902 5.38835 2.17028 6.0167 2.08215 6.67221C1.99991 7.28388 1.99995 8.0477 2 8.9342L2 9L22 9.00001Z"
+                    fill="#323232"
+                  />
+                </svg>
+              </span>
               <span>Credit Card</span>
-
-              <ion-icon
-                class="checkmark fill"
-                name="checkmark-circle"
-              ></ion-icon>
             </button>
 
             <button class="method">
@@ -77,11 +90,6 @@
                 </svg>
               </span>
               <span>PayPal</span>
-
-              <ion-icon
-                class="checkmark"
-                name="checkmark-circle-outline"
-              ></ion-icon>
             </button>
           </div>
 
@@ -165,20 +173,12 @@
             </button>
           </form>
         </div>
-
-        <!-- <button type="submit" class="btn btn-primary" @click="handlePay()">
-          <b>Pay</b> $ <span id="payAmount">2.15</span>
-        </button> -->
       </section>
 
       <!--
     - cart section
   -->
-      <div class="scroll-container">
-        <div class="scroll-content">
-          <!-- Your content here -->
-        </div>
-      </div>
+      <div class="scroll-container"></div>
       <section class="cart">
         <div class="cart-item-box">
           <h2 class="section-heading">Order Summery</h2>
@@ -200,13 +200,15 @@
                 <div class="wrapper">
                   <div class="product-qty">
                     <button id="decrement" @click="decQuantity(item)">
-                      <ion-icon name="remove-outline"></ion-icon>
+                      -
+                      <!-- <ion-icon name="remove-outline"></ion-icon> -->
                     </button>
 
                     <span id="quantity">{{ item.quantity }}</span>
 
                     <button id="increment" @click="incQuantity(item)">
-                      <ion-icon name="add-outline"></ion-icon>
+                      +
+                      <!-- <ion-icon name="add-outline"></ion-icon> -->
                     </button>
                   </div>
 
@@ -216,8 +218,12 @@
                 </div>
               </div>
 
-              <button class="product-close-btn" @click="removeItem(item)">
-                <ion-icon name="close-outline"></ion-icon>
+              <button
+                id="delete"
+                class="product-close-btn"
+                @click="removeItem(item)"
+              >
+                &times;
               </button>
             </div>
           </div>
@@ -410,7 +416,11 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
+#delete {
+  font-size: 18px;
+  color: hsl(0, 0%, 64%);
+  cursor: pointer;
+}
 button {
   border: none;
   background: none;
@@ -473,7 +483,7 @@ input::-webkit-outer-spin-button {
   \*-----------------------------------*/
 
 /**
-   * main container 
+   * main container
    */
 
 .container {
@@ -510,7 +520,7 @@ input::-webkit-outer-spin-button {
 }
 
 /**
-   * checkout section style 
+   * checkout section style
    */
 
 .checkout {
@@ -663,8 +673,31 @@ input::-webkit-outer-spin-button {
 }
 
 .cart-item-box {
+  overflow-y: auto;
   padding: 40px 60px;
-  margin-bottom: auto;
+  max-height: 400px;
+  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.cart-item-box::-webkit-scrollbar {
+  width: 4px;
+  margin-left: 10px;
+  padding: 10px;
+}
+
+.cart-item-box::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.cart-item-box::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.cart-item-box::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
 }
 
 .product-card:not(:last-child) {
@@ -713,6 +746,10 @@ input::-webkit-outer-spin-button {
   display: flex;
   justify-content: center;
   align-items: center;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 .product-qty button:active,
@@ -798,7 +835,7 @@ input::-webkit-outer-spin-button {
   }
 
   /**
-     * checkout section responsive 
+     * checkout section responsive
      */
 
   .checkout {

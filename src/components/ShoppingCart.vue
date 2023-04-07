@@ -134,7 +134,7 @@ export default {
     };
   },
   mounted() {
-    this.$store.dispatch("getProducts");
+    // this.$store.dispatch("getProducts");
   },
   computed: {
     inCart() {
@@ -265,20 +265,7 @@ export default {
 .cart-item-box::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
-/* .scroll-container {
-  width: 400px;
-  height: 300px;
-  overflow: hidden;
-  border: none;
-}
 
-.scroll-content {
-  width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  padding-right: 20px;
-  box-sizing: content-box;
-} */
 .product-card:not(:last-child) {
   margin-bottom: 20px;
 }
